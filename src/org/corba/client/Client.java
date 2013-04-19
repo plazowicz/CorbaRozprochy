@@ -7,18 +7,6 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
-import org.corba.generated.AFactory;
-import org.corba.generated.AFactoryHelper;
-import org.corba.generated.Item;
-import org.corba.generated.ItemA;
-import org.corba.generated.ItemAHelper;
-import org.corba.generated.ItemAlreadyExists;
-import org.corba.generated.ItemB;
-import org.corba.generated.ItemBHelper;
-import org.corba.generated.ItemBusy;
-import org.corba.generated.ItemC;
-import org.corba.generated.ItemCHelper;
-import org.corba.generated.ItemNotExists;
 import org.omg.CORBA.IntHolder;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.ShortHolder;
@@ -27,6 +15,19 @@ import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
+
+import MiddlewareTestbed.AFactory;
+import MiddlewareTestbed.AFactoryHelper;
+import MiddlewareTestbed.Item;
+import MiddlewareTestbed.ItemA;
+import MiddlewareTestbed.ItemAHelper;
+import MiddlewareTestbed.ItemAlreadyExists;
+import MiddlewareTestbed.ItemB;
+import MiddlewareTestbed.ItemBHelper;
+import MiddlewareTestbed.ItemBusy;
+import MiddlewareTestbed.ItemC;
+import MiddlewareTestbed.ItemCHelper;
+import MiddlewareTestbed.ItemNotExists;
 
 public class Client {
 
@@ -43,6 +44,7 @@ public class Client {
 //		String[] args = loadArgs();
 		orb = ORB.init(args,null);
 		// get the Name Service Object Reference from IOR
+		
 
 		org.omg.CORBA.Object nsRef = orb.string_to_object("IOR:010000002b00000049444c3a6f6d672e6f72672f436f734e616d696e672f4e616d696e67436f6e746578744578743a312e300000010000000000000074000000010102000f0000003134392e3135362e39372e3135350000c05a00000b0000004e616d6553657276696365000300000000000000080000000100000000545441010000001c000000010000000100010001000000010001050901010001000000090101000354544108000000af428b4f0100022c");
 
@@ -52,7 +54,6 @@ public class Client {
 		org.omg.CORBA.Object objRef = ncRef.resolve_str("AFactory");
 			
 		factory = AFactoryHelper.narrow(objRef);
-		
 	}
 	
 	public Item createItem(String name,String type) {
@@ -86,8 +87,9 @@ public class Client {
 	}
 	
 	public void doStuff(Item item) {
+		System.out.println("doStuff");
 		if(item._is_a("IDL:MiddlewareTestbed/ItemC:1.0")){
-			
+			System.out.println("wszedlem?");
 			ItemC itc = ItemCHelper.narrow(item);
 			System.out.println(itc.name());
 			IntHolder a = new IntHolder();
@@ -153,9 +155,14 @@ public class Client {
 						name = in.nextLine();
 						item = takeItem(name);
 						if( item != null ) {
+							System.out.println("Item took");
 							doStuff(item);
 							releaseItem(name);
+						} 
+						else {
+							System.out.println("action failed");
 						}
+						
 						break;
 					case 'q':
 						System.in.read();
