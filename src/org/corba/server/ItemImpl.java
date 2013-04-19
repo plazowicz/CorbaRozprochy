@@ -1,6 +1,6 @@
 package org.corba.server;
 
-import MiddlewareTestbed.ItemPOA;
+import org.corba.generated.ItemPOA;
 
 public class ItemImpl extends ItemPOA {
 

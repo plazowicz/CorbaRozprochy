@@ -7,6 +7,18 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import org.corba.generated.AFactory;
+import org.corba.generated.AFactoryHelper;
+import org.corba.generated.Item;
+import org.corba.generated.ItemA;
+import org.corba.generated.ItemAHelper;
+import org.corba.generated.ItemAlreadyExists;
+import org.corba.generated.ItemB;
+import org.corba.generated.ItemBHelper;
+import org.corba.generated.ItemBusy;
+import org.corba.generated.ItemC;
+import org.corba.generated.ItemCHelper;
+import org.corba.generated.ItemNotExists;
 import org.omg.CORBA.IntHolder;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.ShortHolder;
@@ -16,18 +28,6 @@ import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
-import MiddlewareTestbed.AFactory;
-import MiddlewareTestbed.AFactoryHelper;
-import MiddlewareTestbed.Item;
-import MiddlewareTestbed.ItemA;
-import MiddlewareTestbed.ItemAHelper;
-import MiddlewareTestbed.ItemAlreadyExists;
-import MiddlewareTestbed.ItemB;
-import MiddlewareTestbed.ItemBHelper;
-import MiddlewareTestbed.ItemBusy;
-import MiddlewareTestbed.ItemC;
-import MiddlewareTestbed.ItemCHelper;
-import MiddlewareTestbed.ItemNotExists;
 
 public class Client {
 
@@ -88,39 +88,44 @@ public class Client {
 	
 	public void doStuff(Item item) {
 		System.out.println("doStuff");
-		if(item._is_a("IDL:MiddlewareTestbed/ItemC:1.0")){
-			System.out.println("wszedlem?");
-			ItemC itc = ItemCHelper.narrow(item);
-			System.out.println(itc.name());
-			IntHolder a = new IntHolder();
-			a.value = 5;
-			ShortHolder b = new ShortHolder();
-			b.value = 5;
-			System.out.println("Wrzucam: "+a.value+" "+b.value);
-			itc.actionC(a, b);
-			System.out.println("Dostaje: "+a.value+" "+b.value);
-			System.out.println("zyjem: "+itc.get_item_age());
-		}else if(item._is_a("IDL:MiddlewareTestbed/ItemA:1.0")){
-			
-			ItemA ita = ItemAHelper.narrow(item);
-			System.out.println(ita.name());
+		if(item._is_a("IDL:MiddlewareTestbed/ItemA:1.0")){		
+			ItemA itemA = ItemAHelper.narrow(item);
+			logger.info(itemA.name());
 			IntHolder b = new IntHolder();
-			b.value = 5;
-			Float a = new Float(1.4);
-			b.value = 5;
-			System.out.println("Wrzucam: "+a+" "+b.value);
-			ita.actionA(a, b);
-			System.out.println("Dostaje: "+b.value);
-			System.out.println("zyjem: "+ita.get_item_age());
+			Float a = new Float(2.79);
+			b.value = 43;
+			logger.info("Set in parameters: "+a+","+b.value);
+			itemA.actionA(a, b);
+			logger.info("Get result: "+a+","+b.value);
+			logger.info("Item exists for: "+itemA.get_item_age());
 
-		}else if(item._is_a("IDL:MiddlewareTestbed/ItemB:1.0")){
+		}
+		else if(item._is_a("IDL:MiddlewareTestbed/ItemB:1.0")){
 			
-			ItemB itb = ItemBHelper.narrow(item);
-			System.out.println(itb.name());
-			System.out.println("Wynik: "+itb.actionB("ala ma kota"));
-			System.out.println("zyjem: "+itb.get_item_age());
+			ItemB itemB = ItemBHelper.narrow(item);
+			logger.info(itemB.name());
+			String s = "";
+			itemB.actionB(s);
+			logger.info("Get result: "+s);
+			logger.info("Item exists for: "+itemB.get_item_age());
 
-		}	
+		} 
+		else if(item._is_a("IDL:MiddlewareTestbed/ItemC:1.0")){
+			ItemC itemC = ItemCHelper.narrow(item);
+			logger.info(itemC.name());
+			IntHolder a = new IntHolder();
+			a.value = 2;
+			ShortHolder b = new ShortHolder();
+			b.value = 0;
+			logger.info("Set in parameters: "+a.value+","+b.value);
+			itemC.actionC(a, b);
+			logger.info("Get result: "+a.value+","+b.value);
+			logger.info("Item exists for: "+itemC.get_item_age());
+		} 
+		else if( item._is_a("IDL:MiddlewareTestbed/Item:1.0")) {
+			logger.info(item.name());
+			logger.info("Item exists for: "+item.get_item_age());
+		}
 	}
 	
 	public void start() {

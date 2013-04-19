@@ -1,9 +1,9 @@
 package org.corba.server;
 
+import org.corba.generated.ItemCPOA;
 import org.omg.CORBA.IntHolder;
 import org.omg.CORBA.ShortHolder;
 
-import MiddlewareTestbed.ItemCPOA;
 
 public class ItemCImpl extends ItemCPOA {
 

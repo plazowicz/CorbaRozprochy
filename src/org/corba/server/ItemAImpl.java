@@ -1,8 +1,8 @@
 package org.corba.server;
 
+import org.corba.generated.ItemAPOA;
 import org.omg.CORBA.IntHolder;
 
-import MiddlewareTestbed.ItemAPOA;
 
 public class ItemAImpl extends ItemAPOA {
 

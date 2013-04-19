@@ -1,6 +1,6 @@
 package org.corba.server;
 
-import MiddlewareTestbed.ItemBPOA;
+import org.corba.generated.ItemBPOA;
 
 public class ItemBImpl extends ItemBPOA {
 

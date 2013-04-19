@@ -5,6 +5,12 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.corba.generated.AFactoryPOA;
+import org.corba.generated.Item;
+import org.corba.generated.ItemAlreadyExists;
+import org.corba.generated.ItemBusy;
+import org.corba.generated.ItemHelper;
+import org.corba.generated.ItemNotExists;
 import org.corba.util.Tuple;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.Servant;
@@ -12,12 +18,6 @@ import org.omg.PortableServer.POAPackage.ObjectNotActive;
 import org.omg.PortableServer.POAPackage.ServantAlreadyActive;
 import org.omg.PortableServer.POAPackage.WrongPolicy;
 
-import MiddlewareTestbed.AFactoryPOA;
-import MiddlewareTestbed.Item;
-import MiddlewareTestbed.ItemAlreadyExists;
-import MiddlewareTestbed.ItemBusy;
-import MiddlewareTestbed.ItemHelper;
-import MiddlewareTestbed.ItemNotExists;
 
 public class AFactoryImpl extends AFactoryPOA {
 
