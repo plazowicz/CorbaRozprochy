@@ -52,6 +52,7 @@ public class AFactoryImpl extends AFactoryPOA {
 				item = ItemHelper.narrow(poa.servant_to_reference(new ItemImpl(name)));
 			}
 			storage.put(name, new Tuple<Item,Boolean>(item,true));
+			System.out.println("Server: Item created");
 			return item;
 		} catch (ServantNotActive e) {
 			e.printStackTrace();
